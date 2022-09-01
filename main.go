@@ -1,19 +1,20 @@
 package main
 
 import (
-	"fmt"
-	"time"
+	"encoding/json"
+	"log"
+	"net/http"
 )
 
 func main() {
 
-	defer fmt.Println("PULANG YUK")
+	// defer fmt.Println("PULANG YUK")
 
-	time.AfterFunc(time.Second*2, func() {
-		fmt.Println("await")
-	})
+	// time.AfterFunc(time.Second*2, func() {
+	// 	fmt.Println("await")
+	// })
 
-	time.Sleep(time.Second * 5)
+	// time.Sleep(time.Second * 5)
 
 	// var namaVariabel string
 	// namaVariabel = "alan"
@@ -127,4 +128,42 @@ func main() {
 
 	// arrayOfInt[0] = 500
 	// fmt.Println(slice1)
+
+	// mhs2 := mahasiswa.NewMahasiswa()
+	// mhs2.Absen()
+	// mhs2.Variadic("syauqi", "hasan", "rizki")
+
+	//defer
+	//panic
+	//recover
+
+	// defer func() {
+	// 	if r := recover(); r != nil {
+	// 		log.Println("r", r)
+	// 	}
+	// }()
+
+	// var rizki interface{} = "rizki"
+	// v := rizki.(int)
+	// log.Println(v)
+
+	resp, err := http.Get("https://jsonplaceholder.typicode.com/todos/1")
+	if err != nil {
+		log.Println(err)
+	}
+
+	defer resp.Body.Close()
+
+	type respJsonPlaceholder struct {
+		UserId    int    `json:"userId"`
+		ID        int    `json:"id"`
+		Title     string `json:"title"`
+		Completed bool   `json:"completed"`
+	}
+
+	xxx := &respJsonPlaceholder{}
+
+	err = json.NewDecoder(resp.Body).Decode(xxx)
+
+	log.Println(xxx.Completed)
 }
