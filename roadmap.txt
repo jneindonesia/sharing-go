@@ -1,0 +1,15 @@
+inisialiasi variable/konstanta
+  - type declaration
+  - deklarasi langsung
+operasi matematika
+  - pertambahan
+  - pembagian
+  - pengurangan
+  - perkalian
+conditional if, switch
+macam-macam tipe data -> array, map, interface kosong, pointer, struct
+for loops
+function
+function arguments
+function multiple return value
+type assertion
