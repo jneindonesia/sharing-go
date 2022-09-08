@@ -1,5 +1,11 @@
 package main
 
+import (
+	"log"
+
+	"github.com/hikhtiarta27/sharing-go/config"
+)
+
 func main() {
 
 	// defer fmt.Println("PULANG YUK")
@@ -160,4 +166,67 @@ func main() {
 	// err = json.NewDecoder(resp.Body).Decode(xxx)
 
 	// log.Println(xxx.Completed)
+
+	db := config.NewDB()
+
+	defer db.Close()
+
+	// TABLE: Mahasiswa
+	// COLUMN: id -> int, name -> varchar, age -> int
+
+	type Mhs struct {
+		ID   int
+		Name string
+		Age  int
+	}
+
+	// Call query select
+	rows, err := db.Query("SELECT id, name, age FROM mahasiswa")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	arrayOfMhs := make([]Mhs, 0)
+
+	defer rows.Close()
+
+	// Masukin hasil query ke dalam variabel
+	for rows.Next() {
+		mhsImpl := Mhs{}
+		if err := rows.Scan(
+			&mhsImpl.ID,
+			&mhsImpl.Name,
+			&mhsImpl.Age,
+		); err != nil {
+			log.Fatal(err)
+		}
+
+		arrayOfMhs = append(arrayOfMhs, mhsImpl)
+	}
+
+	log.Println(arrayOfMhs)
+	log.Println("ID:", arrayOfMhs[0].ID)
+	log.Println("NAME:", arrayOfMhs[0].Name)
+	log.Println("AGE:", arrayOfMhs[0].Age)
+
+	// result, err := db.Exec("INSERT INTO mahasiswa (name, age) VALUES ('Syauqi Gantenk', 69)")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// log.Println(result.LastInsertId())
+	// log.Println(result.RowsAffected())
+
+	stmt, err := db.Prepare("INSERT INTO mahasiswa (name, age) VALUES (?, ?)")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	result, err := stmt.Exec("Syauqi Gantenk", 69)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println(result.LastInsertId())
+	log.Println(result.RowsAffected())
 }

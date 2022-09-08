@@ -1,6 +1,10 @@
 package config
 
 import (
+	"database/sql"
+	"fmt"
+	"log"
+
 	_ "github.com/go-sql-driver/mysql"
 	// "gorm.io/driver/mysql"
 )
@@ -11,7 +15,7 @@ var USERNAME string = "root"
 var PASSWORD string = "root"
 var DATABASE_NAME string = "sharing_go"
 
-func NewDB() {
+func NewDB() *sql.DB {
 	// cfg := mysql.Config{
 	// 	User:   USERNAME,
 	// 	Passwd: PASSWORD,
@@ -20,9 +24,20 @@ func NewDB() {
 	// 	DBName: DATABASE_NAME,
 	// }
 
-	// // Get a database handle.
-	// _, err := sql.Open("mysql", cfg.FormatDSN())
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+	// DSN for MYSQL
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", USERNAME, PASSWORD, HOST, PORT, DATABASE_NAME) // "username:password@tcp(127.0.0.1:3306)/jazzrecords"
+
+	// Create Connection to Database
+	db, err := sql.Open("mysql", dsn)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Check connection
+	if err := db.Ping(); err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("DB CONNECTED")
+	return db
 }
