@@ -1,11 +1,5 @@
 package main
 
-import (
-	"encoding/json"
-	"log"
-	"net/http"
-)
-
 func main() {
 
 	// defer fmt.Println("PULANG YUK")
@@ -147,23 +141,23 @@ func main() {
 	// v := rizki.(int)
 	// log.Println(v)
 
-	resp, err := http.Get("https://jsonplaceholder.typicode.com/todos/1")
-	if err != nil {
-		log.Println(err)
-	}
+	// resp, err := http.Get("https://jsonplaceholder.typicode.com/todos/1")
+	// if err != nil {
+	// 	log.Println(err)
+	// }
 
-	defer resp.Body.Close()
+	// defer resp.Body.Close()
 
-	type respJsonPlaceholder struct {
-		UserId    int    `json:"userId"`
-		ID        int    `json:"id"`
-		Title     string `json:"title"`
-		Completed bool   `json:"completed"`
-	}
+	// type respJsonPlaceholder struct {
+	// 	UserId    int    `json:"userId"`
+	// 	ID        int    `json:"id"`
+	// 	Title     string `json:"title"`
+	// 	Completed bool   `json:"completed"`
+	// }
 
-	xxx := &respJsonPlaceholder{}
+	// xxx := &respJsonPlaceholder{}
 
-	err = json.NewDecoder(resp.Body).Decode(xxx)
+	// err = json.NewDecoder(resp.Body).Decode(xxx)
 
-	log.Println(xxx.Completed)
+	// log.Println(xxx.Completed)
 }
