@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	_ "github.com/go-sql-driver/mysql"
-	// "gorm.io/driver/mysql"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 var HOST string = "10.16.1.121"
@@ -39,5 +39,15 @@ func NewDB() *sql.DB {
 	}
 
 	log.Println("DB CONNECTED")
+	return db
+}
+
+func NewGormDB() *gorm.DB {
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", USERNAME, PASSWORD, HOST, PORT, DATABASE_NAME) // "username:password@tcp(127.0.0.1:3306)/jazzrecords"
+	db, err := gorm.Open(mysql.Open(dsn))
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	return db
 }
