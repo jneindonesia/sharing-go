@@ -9,10 +9,10 @@ import (
 	"gorm.io/gorm"
 )
 
-var HOST string = "10.16.1.121"
-var PORT string = "8060"
+var HOST string = "localhost"
+var PORT string = "3306"
 var USERNAME string = "root"
-var PASSWORD string = "root"
+var PASSWORD string = ""
 var DATABASE_NAME string = "sharing_go"
 
 func NewDB() *sql.DB {

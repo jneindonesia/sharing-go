@@ -13,3 +13,11 @@ function
 function arguments
 function multiple return value
 type assertion
+
+agenda 8 Sep 2022
+- database sql
+- gorm
+
+agenda 22 Sep 2022
+- echo webframework
+  ref: https://echo.labstack.com/guide/
